@@ -1,0 +1,119 @@
+PL/SQL practical 4 
+1)
+ create table acc_mstr2(acc_no int,
+curr_bal int);
+insert into acc_mstr2(acc_no,curr_bal)
+values(12345,34000);
+set serveroutput on;
+declare
+mcur int;
+mac int;
+begin
+mac:=&mac;
+select curr_bal into mcur from acc_mstr2 where acc_no=mac;
+if mcur<50000 then
+update acc_mstr2 set curr_bal=curr_bal-100 where 
+acc_no=mac;
+end if;
+dbms_output.put_line('updated');
+end;
+/
+2)
+create table employee (empid int primary key,
+empname varchar2(10),
+doj date,
+salary int);
+
+insert into employee(empid,empname,doj,salary)
+values(123,'Pinku',date '2010-03-23',15000);
+
+SET SERVEROUTPUT ON;
+DECLARE
+  eid INT;
+  DOJ DATE;
+  dt DATE;
+BEGIN
+  dt := TO_DATE('2010-02-26', 'YYYY-MM-DD');
+  eid := &eid;
+  SELECT doj INTO DOJ FROM employee WHERE eid = empid;
+  IF DOJ <= dt THEN
+    UPDATE employee SET salary = salary + 0.15 * salary WHERE eid = empid;
+  ELSE
+    UPDATE employee SET salary = salary + 0.05 * salary WHERE eid = empid;
+  END IF;
+END;
+/
+3)
+create table place (
+floor int,
+room_no int primary key,
+no_of_seat int);
+
+insert into place (floor,room_no,no_of_seat)
+values(4,420,9211);
+
+set serveroutput on;
+declare
+mid int;
+seats int;
+begin
+mid:=&mid;
+select no_of_seat into seats from place where 
+mid=room_no;
+dbms_output.put_line('No of seats '||seats);
+if(seats<=60) then
+dbms_output.put_line('Fairly small');
+elsif (seats>60 and seats <=100) then
+dbms_output.put_line('Little bigger');
+else
+dbms_output.put_line('Biggest');
+end if;
+end;
+/
+
+4)
+create table lecturer(lecturer_id int primary key,
+name varchar(10),
+major_subject varchar(10),
+doj date);
+insert into lecturer (lecturer_id ,name,major_subject)
+values(240,'mansi','MPMC');
+set serveroutput on;
+declare
+  lect_id int;
+  sub varchar(10);
+begin
+  lect_id := &lect_id;
+  select major_subject into sub from lecturer where lect_id = lecturer_id;
+  begin
+    case upper(sub)
+      when 'MPMC' then
+        dbms_output.put_line('B.tech');
+      when 'C++' then
+        dbms_output.put_line('BSc.IT');
+      else
+        dbms_output.put_line('Invalid subject');
+    end case;
+  end;
+end;
+/
+ 5)Write a PL/SQL code block to calculate the area of circle for a values of radius 2 to 7 and corresponding values of calculated
+area in an empty table area(radius,area)
+
+create table area 
+(radius int,
+area decimal(10,2));
+
+set serveroutput on;
+declare 
+r int;
+a decimal(10,2);
+begin
+r:=2;
+while r<=7 loop
+a:=3.14*r*r;
+insert into area values(r,a);
+r:=r+1;
+end loop;
+end;
+/
