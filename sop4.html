@@ -1,0 +1,17 @@
+<!Doctype html>
+<html>
+<head><title>Number or Not</title></head>
+<body>
+<form name=frm1>
+Enter value:<Input type=text name=t1><br>
+<input type=button value=Check onClick=f1()>
+<script type=text/javascript>
+function f1()
+{
+var a;
+a=frm1.t1.value;
+if(isNaN(a))
+alert("Not a Number");
+else
+alert("IsNumber");
+}</script></Form></body></html>
